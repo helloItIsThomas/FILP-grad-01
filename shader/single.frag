@@ -22,15 +22,15 @@ void main() {
 
     // Create multiple rings by using sin of distance and time
     float rings = sin(dist * slider0);
-    float rings2 = sin(dist * 100.0 - atan(pos.y, pos.x) * 5.0 + (time * slider2 * 0.1) * dist * 0.5);
+    float rings2 = sin(dist * 12.0 - atan(pos.y, pos.x) * 5.0 + (time * slider2 * 0.1) * dist * 0.5);
 
     float ringEffect = mix(rings, rings2, slider1 / 100.0);
 
-    float depth = 1.0 - pow(dist, 2.0);
+    float depth = 10.0 - pow(dist, 5.0);
 
     float lighting = dot(normalize(pos), vec2(0.707, 0.707));
-    ringEffect = smoothstep(0.0, 0.1, abs(ringEffect)) * depth;
-    ringEffect *= (0.8 + 0.2 * lighting);
+    ringEffect = smoothstep(0.1, 0.8, abs(ringEffect)) * depth;
+    ringEffect *= (0.6 + 0.2 * lighting);
 
     vec3 baseColor = col1;
     vec3 midColor = col2;
