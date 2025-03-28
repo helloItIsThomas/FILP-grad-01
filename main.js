@@ -11,7 +11,7 @@ import {
 import { sv } from "./script/variables.js";
 import { loadShaders } from "./script/loadShaders.js";
 import { draw } from "./script/draw.js";
-
+import gsap from "gsap";
 async function mySetup(palette) {
   sv.pApp = new Application();
 
@@ -91,8 +91,8 @@ async function mySetup(palette) {
       uSampler: spinnyBG.source.style,
       waveUniforms: {
         mouseVelocity: { value: 0.5, type: "f32" },
-        slider0: { value: 1.0, type: "f32" },
-        slider1: { value: 1.0, type: "f32" },
+        slider0: { value: 70.0, type: "f32" },
+        slider1: { value: 25.0, type: "f32" },
         slider2: { value: 1.0, type: "f32" },
         // mousePos: { value: sv.mousePos, type: "vec2<f32>" },
         time: { value: sv.pApp.ticker.lastTime, type: "f32" },
@@ -117,6 +117,12 @@ async function mySetup(palette) {
     shader,
   });
 
+  const uniformValues = {
+    val0: 60.0,
+    val1: 70.0,
+    val2: 100.0,
+  };
+
   const container = new Container();
   container.width = sv.pApp.screen.width;
   container.height = sv.pApp.screen.height;
@@ -125,9 +131,31 @@ async function mySetup(palette) {
   container.addChild(sv.triangleMesh);
   sv.pApp.stage.addChild(container);
 
+  const tl = gsap.timeline({
+    paused: true,
+    repeat: -1,
+    yoyo: true,
+  });
+
+  tl.to(uniformValues, {
+    val0: 100.0,
+    val1: 100.0,
+    val2: 100.0,
+    duration: 1,
+    ease: "power2.inOut",
+  });
+
+  tl.play();
+
   sv.pApp.ticker.add(() => {
     const time = sv.pApp.ticker.lastTime * 0.01;
     sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = time;
+
+    // sv.triangleMesh.shader.resources.waveUniforms.uniforms.slider0 =
+    // uniformValues.val0;
+
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.slider1 =
+      uniformValues.val1;
 
     draw(
       instancePositionBuffer,
@@ -142,7 +170,7 @@ async function mySetup(palette) {
 const sliders = document.querySelectorAll(".slider");
 
 sliders.forEach((slider) => {
-  slider.addEventListener("input", updateSlider);
+  // slider.addEventListener("input", updateSlider);
 });
 
 function updateSlider(event) {

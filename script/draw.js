@@ -1,6 +1,6 @@
 import { Point } from "pixi.js";
 import { sv } from "./variables.js";
-
+import gsap from "gsap";
 export function draw(
   instancePositionBuffer,
   alphaBuffer,
@@ -32,7 +32,7 @@ export function draw(
   for (let i = 0; i < totalTriangles; i++) {
     const triangle = triangles[i];
     const angle = (i / totalTriangles) * Math.PI * 2; // Distribute triangles in a circle
-    const time = sv.pApp.ticker.lastTime * 0.1;
+    const time = clock;
 
     const origin = sv.mousePos;
 
@@ -62,4 +62,8 @@ export function draw(
 
   instancePositionBuffer.update();
   alphaBuffer.update();
+
+  // slider0: { value: 70.0, type: "f32" },
+  // sv.triangleMesh.shader.resources.waveUniforms.uniforms.slider0 =
+  // Math.sin(clock * 0.005) * 100.0;
 }
