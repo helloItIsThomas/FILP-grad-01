@@ -93,7 +93,7 @@ async function mySetup(palette) {
         mouseVelocity: { value: 0.5, type: "f32" },
         slider0: { value: 70.0, type: "f32" },
         slider1: { value: 25.0, type: "f32" },
-        slider2: { value: 1.0, type: "f32" },
+        slider2: { value: 0.0, type: "f32" },
         // mousePos: { value: sv.mousePos, type: "vec2<f32>" },
         time: { value: sv.pApp.ticker.lastTime, type: "f32" },
         col1: {
@@ -156,6 +156,9 @@ async function mySetup(palette) {
 
     sv.triangleMesh.shader.resources.waveUniforms.uniforms.slider1 =
       uniformValues.val1;
+
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.slider2 =
+      uniformValues.val2;
 
     draw(
       instancePositionBuffer,
