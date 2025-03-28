@@ -19,12 +19,14 @@ float noise(vec2 p) {
 }
 
 void main() {
+    float numberOfRings = 1.0;
+
     vec2 center = vec2(0.5, 0.5);
     vec2 pos = vUV - center;
     float dist = length(pos);
 
     // Create base ring pattern for distortion
-    float baseRing = sin(dist * slider0 * 0.5 + time * 0.2);
+    float baseRing = sin(dist * slider0 * 0.5 + time * 0.8);
     float flowAngle = atan(pos.y, pos.x) + baseRing * slider0 / 100.;
 
     // Create flowing distortion based on ring pattern
@@ -38,7 +40,7 @@ void main() {
 
     // Update rings to follow the flow
     float rings = sin(dist * slider0 + baseRing);
-    float rings2 = sin(dist * 12.0 - flowAngle * 5.0 +
+    float rings2 = sin(dist * 12.0 - flowAngle * numberOfRings +
         slider1 * 0.5 * dist * 0.5 +
         baseRing * 2.0);
 
